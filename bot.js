@@ -48,4 +48,4 @@ for (const file of eventFiles) {
 
 connection = require("./database/db")
 
-client.login(config.token);
+client.login(config.general.token);
