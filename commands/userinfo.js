@@ -25,6 +25,15 @@ module.exports = {
 
     const permissions = member.permissions.toArray().map((p) => `\`${p}\``).join(", ") || "None";
 
+    const joinedAt = moment.utc(member.joinedTimestamp).format("X");
+    const createdAt = moment.utc(user.createdTimestamp).format("X");
+
+    const badges = user.flags.toArray();
+    const activity = member.presence?.activities[0] || "None";
+    const boosted = member.premiumSinceTimestamp
+      ? moment.utc(member.premiumSinceTimestamp).format("X")
+      : "Not Boosting";
+
     const embed = new EmbedBuilder()
       .setColor(config.colors.default)
       .setThumbnail(user.displayAvatarURL({ dynamic: true }))
@@ -32,25 +41,14 @@ module.exports = {
       .addFields(
         { name: "User ID", value: user.id, inline: true },
         { name: "Descriminator", value: user.discriminator, inline: true},
-        { name: "Joined Discord", value: moment(user.createdAt).format("MMMM Do YYYY, h:mm:ss a"), inline: true},
-        { name: "Joined Server", value: moment(member.joinedAt).format("MMMM Do YYYY, h:mm:ss a"), inline: true},
+        { name: "Joined Discord", value: createdAt, inline: true},
+        { name: "Joined Server", value: joinedAt, inline: true},
         { name: "Roles", value: roles, inline: true},
-        { name: "Permissions", value: permissions, inline: true},
+        { name: "Activity", value: activity, inline: true},
+        { name: "Roles", value: boosted, inline: true},
+        { name: "Badges", value: badges, inline: false},
+        { name: "Permissions", value: permissions, inline: false},
     )
-    if (user.presence?.activities?.length > 0) {
-      const activities = user.presence.activities.map((a) => `${a.name} ${a.details ? `(${a.details})` : ""}`).join("\n");
-      embed.addFields({ name: "Activities", value: activities });
-    }
-
-    if (user.flags?.toArray().length > 0) {
-      const flags = user.flags.toArray().map((f) => `\`${f}\``).join(", ");
-      embed.addFields({ name: "Badges", value: flags, inline: true });
-    }
-
-    if (member.premiumSince) {
-      const boostedSince = moment(member.premiumSince).format("MMMM Do YYYY, h:mm:ss a");
-      embed.addFields({ name: "Boosted Since", value: boostedSince, inline: true});
-    }
 
     await interaction.reply({ embeds: [embed] });
   },
