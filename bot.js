@@ -1,33 +1,50 @@
-const fs = require('fs');
-const { Client, Collection, Intents } = require('discord.js');
+const fs = require('node:fs');
+const { Client, Collection, GatewayIntentBits, Partials } = require('discord.js');
+const config = require('./config.json');
+
+let connection;
 
 const client = new Client({
-  intents: Object.values(Intents.FLAGS),
+  intents: [
+    GatewayIntentBits.Guilds,
+    GatewayIntentBits.GuildMessages,
+    GatewayIntentBits.GuildPresences,
+    GatewayIntentBits.GuildMessageReactions,
+    GatewayIntentBits.DirectMessages,
+    GatewayIntentBits.MessageContent
+],
+partials: [Partials.Channel, Partials.Message, Partials.User, Partials.GuildMember, Partials.Reaction]
 });
 
 client.commands = new Collection();
 
-const commandFiles = fs
-  .readdirSync('./commands')
-  .filter((file) => file.endsWith('.js'));
+const commandsPath = path.join(__dirname, 'commands');
+const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
 
 for (const file of commandFiles) {
-  const command = require(`./commands/${file}`);
-  client.commands.set(command.data.name, command);
-}
+  const filePath = path.join(commandsPath, file);
+  const command = require(filePath)
 
-const eventFiles = fs
-  .readdirSync('./events')
-  .filter((file) => file.endsWith('.js'));
-
-for (const file of eventFiles) {
-  const event = require(`./events/${file}`);
-  if (event.once) {
-    client.once(event.name, (...args) => event.execute(...args, client));
+  if('data' in command && 'execute' in command) {
+    client.commands.set(command.data.name, command);
   } else {
-    client.on(event.name, (...args) => event.execute(...args, client));
+    console.log(`[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`);
   }
 }
 
-const config = require('./config.json');
+const eventsPath = path.join(__dirname, 'events');
+const eventFiles = fs.readdirSync(eventsPath).filter(file => file.endsWith('.js'));
+
+for (const file of eventFiles) {
+  const filePath = path.join(eventsPath, file);
+  const event = require(filePath)
+  if (event.once) {
+    client.once(event.name, (...args) => event.execute(...args));
+  } else {
+    client.on(event.name, (...args) => event.execute(...args));
+  }
+}
+
+connection = require("./database/db")
+
 client.login(config.token);
