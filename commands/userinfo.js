@@ -44,12 +44,12 @@ module.exports = {
 
     if (user.flags?.toArray().length > 0) {
       const flags = user.flags.toArray().map((f) => `\`${f}\``).join(", ");
-      embed.addFields({ name: "Badges", values: flags, inline: true });
+      embed.addFields({ name: "Badges", value: flags, inline: true });
     }
 
     if (member.premiumSince) {
       const boostedSince = moment(member.premiumSince).format("MMMM Do YYYY, h:mm:ss a");
-      embed.addFields({ name: "Boosted Since", values: boostedSince, inline: true});
+      embed.addFields({ name: "Boosted Since", value: boostedSince, inline: true});
     }
 
     await interaction.reply({ embeds: [embed] });
