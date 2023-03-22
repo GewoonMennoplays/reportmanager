@@ -1,7 +1,7 @@
+const config = require("./config")
+const { Client, GatewayIntentBits, Partials, Collection } = require('discord.js');
 const fs = require('node:fs');
-const { Client, Collection, GatewayIntentBits, Partials } = require('discord.js');
-const config = require('./config.json');
-const path = require("node:path")
+const path = require('node:path');
 
 let connection;
 
