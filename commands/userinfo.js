@@ -45,7 +45,6 @@ module.exports = {
         { name: "Joined Server", value: joinedAt, inline: true},
         { name: "Roles", value: roles, inline: true},
         { name: "Activity", value: activity, inline: true},
-        { name: "Roles", value: boosted, inline: true},
         { name: "Badges", value: badges, inline: false},
         { name: "Permissions", value: permissions, inline: false}
     )
