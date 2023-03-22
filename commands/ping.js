@@ -1,4 +1,4 @@
-const { MessageEmbed, SlashCommandBuilder } = require("discord.js");
+const { EmbedBuilder, SlashCommandBuilder } = require("discord.js");
 const config = require("../config.json");
 
 module.exports = {
@@ -7,10 +7,10 @@ module.exports = {
         .setDescription("Get the bot's ping and response time"),
 
     async execute(interaction) {
-        const embed = new MessageEmbed()
+        const embed = new EmbedBuilder()
             .setTitle("🏓 Pong!")
             .setDescription(`API Ping: ${Math.round(interaction.client.ws.ping)}ms\nResponse Time: Loading...`)
-            .setColor(config.colors.information);
+            .setColor(config.colors.default);
 
         const sent = await interaction.reply({ embeds: [embed], fetchReply: true });
         const responseTime = sent.createdTimestamp - interaction.createdTimestamp;
