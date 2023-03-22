@@ -47,7 +47,7 @@ module.exports = {
         { name: "Activity", value: activity, inline: true},
         { name: "Roles", value: boosted, inline: true},
         { name: "Badges", value: badges, inline: false},
-        { name: "Permissions", value: permissions, inline: false},
+        { name: "Permissions", value: permissions, inline: false}
     )
 
     await interaction.reply({ embeds: [embed] });
