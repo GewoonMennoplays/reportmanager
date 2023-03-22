@@ -43,7 +43,6 @@ module.exports = {
         { name: "Descriminator", value: user.discriminator, inline: true},
         { name: "Joined Discord", value: createdAt, inline: true},
         { name: "Joined Server", value: joinedAt, inline: true},
-        { name: "Roles", value: roles, inline: true},
         { name: "Activity", value: activity, inline: true},
         { name: "Badges", value: badges, inline: false},
         { name: "Permissions", value: permissions, inline: false}
