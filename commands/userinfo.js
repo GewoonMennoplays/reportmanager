@@ -1,5 +1,6 @@
 const { Permissions, SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 const moment = require("moment");
+const config = require("../config.json")
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -25,7 +26,7 @@ module.exports = {
     const permissions = member.permissions.toArray().map((p) => `\`${p}\``).join(", ") || "None";
 
     const embed = new EmbedBuilder()
-      .setColor("RANDOM")
+      .setColor(config.colors.default)
       .setThumbnail(user.displayAvatarURL({ dynamic: true }))
       .setTitle(`${user.username}#${user.discriminator}`)
       .addFields(
