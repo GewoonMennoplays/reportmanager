@@ -49,7 +49,7 @@ module.exports = {
         { name: "Server information", value:
           `Server join date: <t:${joinedAt}:F>
           Permissions: \`${permissions}\`
-          Roles: ${roles}`
+          Roles: \n${roles}`
         }
       );
 
