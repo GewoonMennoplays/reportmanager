@@ -29,7 +29,7 @@ module.exports = {
     const createdAt = moment.utc(user.createdTimestamp).format("X");
 
     const badges = user.flags.toArray();
-    const activity = member.presence?.activities[0] || "None";
+    const activity = member.presence?.activities.length > 0 ? member.presence.activities.map(a => a.name).join(', ') : "None";
     const boosted = member.premiumSinceTimestamp
       ? moment.utc(member.premiumSinceTimestamp).format("X")
       : "Not Boosting";
