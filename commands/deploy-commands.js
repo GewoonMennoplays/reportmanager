@@ -1,4 +1,5 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
+const { SlashCommandBuilder, EmbedBuilder } = require('@discordjs/builders');
+const config = require('./config.json');
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -6,14 +7,31 @@ module.exports = {
     .setDescription('Deploys the slash commands to Discord'),
 
   async execute(interaction) {
+    // Check if the user ID matches the devID in the config
+    if (interaction.user.id !== config.general.devID) {
+        await interaction.reply({
+          content: 'You are not authorized to use this command!',
+          ephemeral: true // Make the response visible only to the user who triggered the command
+        });
+        return;
+      }
+    
     await interaction.deferReply();
 
     try {
       await require('./deploy-commands');
-      await interaction.editReply('Deployed the slash commands to Discord!');
+      const succesEmbed = new EmbedBuilder()
+      .setTitle("Admin - Developer Panel")
+      .setDescription("✅ ``Deployed the slash commands to Discord succesfully!``")
+      .setColor("#ff0000")
+      await interaction.editReply({embeds: [succesEmbed], ephemeral: true});
     } catch (error) {
       console.error(error);
-      await interaction.editReply('Failed to deploy the slash commands to Discord.');
+      const failEmbed = new EmbedBuilder()
+      .setTitle("Admin - Developer Panel")
+      .setDescription(":x: ``Failed top deploy the slash commands to Discord:``\n ```" + error + "```")
+      .setColor("#ff0000")
+      await interaction.editReply({embeds: [failEmbed], ephemeral: true});
     }
   },
 };
