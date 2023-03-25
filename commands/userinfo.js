@@ -40,16 +40,16 @@ module.exports = {
       .setTitle(`${user.username}#${user.discriminator}`)
       .addFields(
         { name: "User information", value: 
-          `**User ID:** \`${user.id}\`
-          **Descriminator:** \`${user.discriminator}\`
-          **Creation date:** <t:${createdAt}:F>\`
-          **Activity:** \`${activity}\`
-          **Badges:** \`${badges}\``
+          `User ID: \`${user.id}\`
+          Descriminator: \`${user.discriminator}\`
+          Creation date: <t:${createdAt}:F>\`
+          Activity: \`${activity}\`
+          Badges: \`${badges}\``
         },
         { name: "Server information", value:
-          `**Server join date:** <t:${joinedAt}:F>
-          **Permissions:** \`${permissions}\`
-          **Roles:** \`${roles}\``
+          `Server join date: <t:${joinedAt}:F>
+          Permissions: \`${permissions}\`
+          Roles: ${roles}`
         }
       );
 
