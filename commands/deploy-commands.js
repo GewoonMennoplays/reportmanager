@@ -23,14 +23,14 @@ module.exports = {
       const succesEmbed = new EmbedBuilder()
       .setTitle("Admin - Developer Panel")
       .setDescription("✅ ``Deployed the slash commands to Discord succesfully!``")
-      .setColor("#ff0000")
+      .setColor("#FF0000")
       await interaction.editReply({embeds: [succesEmbed], ephemeral: true});
     } catch (error) {
       console.error(error);
       const failEmbed = new EmbedBuilder()
       .setTitle("Admin - Developer Panel")
       .setDescription(":x: ``Failed top deploy the slash commands to Discord:``\n ```" + error + "```")
-      .setColor("#ff0000")
+      .setColor("#FF0000")
       await interaction.editReply({embeds: [failEmbed], ephemeral: true});
     }
   },
