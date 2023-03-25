@@ -28,7 +28,7 @@ module.exports = {
     const joinedAt = moment.utc(member.joinedTimestamp).format("X");
     const createdAt = moment.utc(user.createdTimestamp).format("X");
 
-    const badges = user.flags.toArray();
+    const badges = user.flags.toArray().join(", ");
     const activity = member.presence?.activities.length > 0 ? member.presence.activities.map(a => a.name).join(', ') : "None";
     const boosted = member.premiumSinceTimestamp
       ? moment.utc(member.premiumSinceTimestamp).format("X")
