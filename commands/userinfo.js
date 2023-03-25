@@ -28,25 +28,30 @@ module.exports = {
     const joinedAt = moment.utc(member.joinedTimestamp).format("X");
     const createdAt = moment.utc(user.createdTimestamp).format("X");
 
-    const badges = user.flags.toArray().join(", ");
-    const activity = member.presence?.activities.length > 0 ? member.presence.activities.map(a => a.name).join(', ') : "None";
+    const badges = user.flags.toArray().map((f) => `\`${f}\``).join(", ") || "None";
+    const activity = member.presence?.activities.length > 0 ? member.presence.activities.map(a => `\`${a.name}\``).join(', ') : "None";
     const boosted = member.premiumSinceTimestamp
       ? moment.utc(member.premiumSinceTimestamp).format("X")
       : "Not Boosting";
-
-    const description = `**User ID:** \`${user.id}\`
-**Descriminator:** \`${user.discriminator}\`
-**Joined Discord:** \`${createdAt}\`
-**Joined Server:** \`${joinedAt}\`
-**Activity:** \`${activity}\`
-**Badges:** \`${badges}\`
-**Permissions:** ${permissions}`;
 
     const embed = new EmbedBuilder()
       .setColor(config.colors.default)
       .setThumbnail(user.displayAvatarURL({ dynamic: true }))
       .setTitle(`${user.username}#${user.discriminator}`)
-      .setDescription(description);
+      .addFields(
+        { name: "User information", value: 
+          `**User ID:** \`${user.id}\`
+          **Descriminator:** \`${user.discriminator}\`
+          **Creation date:** <t:${createdAt}:F>\`
+          **Activity:** \`${activity}\`
+          **Badges:** \`${badges}\``
+        },
+        { name: "Server information", value:
+          `**Server join date:** <t:${joinedAt}:F>
+          **Permissions:** \`${permissions}\`
+          **Roles:** \`${roles}\``
+        }
+      );
 
     await interaction.reply({ embeds: [embed] });
   },
