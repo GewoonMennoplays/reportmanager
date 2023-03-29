@@ -23,7 +23,7 @@ module.exports = {
       .map((r) => r.toString())
       .join(" ") || "None";
 
-    const permissions = member.permissions.toArray().map((p) => `\`${p}\``).join(", ") || "None";
+    const permissions = member.permissions.toArray().map((p) => `${p}`).join(", ") || "None";
 
     const joinedAt = moment.utc(member.joinedTimestamp).format("X");
     const createdAt = moment.utc(user.createdTimestamp).format("X");
