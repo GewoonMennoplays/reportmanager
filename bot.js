@@ -1,7 +1,7 @@
-const config = require("./config.json")
-const { Client, Intents, Partials, Collection } = require('discord.js');
-const fs = require('node:fs');
-const path = require('node:path');
+const { Client, Intents, Collection } = require('discord.js');
+const fs = require('fs');
+const path = require('path');
+const config = require('./config.json');
 
 let connection;
 
@@ -9,10 +9,10 @@ const client = new Client({
   intents: [
     Intents.FLAGS.GUILDS,
     Intents.FLAGS.GUILD_MESSAGES,
-    Intents.FLAGS.MESSAGE_CONTENT,
     Intents.FLAGS.GUILD_MEMBERS,
-],
-partials: [Partials.Channel, Partials.Message, Partials.User, Partials.GuildMember, Partials.Reaction]
+    Intents.FLAGS.MESSAGE_CONTENT,
+  ],
+  partials: ['CHANNEL', 'MESSAGE', 'USER', 'GUILD_MEMBER', 'REACTION'],
 });
 
 client.commands = new Collection();
