@@ -1,5 +1,5 @@
 const config = require("./config.json")
-const { Client, Intents, Partials, Collection } = require('discord.js');
+const { Client, GatewayIntentBits, Partials, Collection } = require('discord.js');
 const fs = require('node:fs');
 const path = require('node:path');
 
@@ -7,11 +7,10 @@ let connection;
 
 const client = new Client({
   intents: [
-    Intents.FLAGS.GUILDS,
-    Intents.FLAGS.GUILD_MESSAGES,
-    Intents.FLAGS.GUILD_PRESENCES,
-    Intents.FLAGS.MESSAGE_REACTIONS,
-    Intents.FLAGS.DIRECT_MESSAGES
+		GatewayIntentBits.Guilds,
+		GatewayIntentBits.GuildMessages,
+		GatewayIntentBits.MessageContent,
+		GatewayIntentBits.GuildMembers,
 ],
 partials: [Partials.Channel, Partials.Message, Partials.User, Partials.GuildMember, Partials.Reaction]
 });
