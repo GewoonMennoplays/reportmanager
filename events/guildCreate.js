@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 const moment = require('moment');
-const mysql = require('mysql');
+const mysql = require('mysql2');
 
 const client = new Discord.Client();
 const connection = mysql.createConnection({
