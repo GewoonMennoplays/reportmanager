@@ -1,17 +1,16 @@
-const { Client, Collection } = require('discord.js');
+const { Client, Intents, Collection } = require('discord.js');
 const fs = require('fs');
 const path = require('path');
 const config = require('./config.json');
 
 let connection;
 
-const client = new Client({ 
-  // Define the intents using the new format
+const client = new Client({
   intents: [
-    'GUILDS',
-    'GUILD_MESSAGES',
-    'GUILD_MEMBERS',
-    'GUILD_MESSAGE_CONTENT',
+    Intents.FLAGS.GUILDS,
+    Intents.FLAGS.GUILD_MESSAGES,
+    Intents.FLAGS.GUILD_MEMBERS,
+    Intents.FLAGS.GUILD_MESSAGE_CONTENT,
   ],
   partials: ['CHANNEL', 'MESSAGE', 'USER', 'GUILD_MEMBER', 'REACTION']
 });
