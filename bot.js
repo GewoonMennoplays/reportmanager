@@ -5,12 +5,8 @@ const config = require('./config.json');
 
 let connection;
 
-const intents = new Intents([
-  'GUILDS',
-  'GUILD_MESSAGES',
-  'GUILD_MEMBERS',
-  'MESSAGE_CONTENT',
-]);
+const intents = new Intents();
+intents.add('GUILDS', 'GUILD_MESSAGES', 'GUILD_MEMBERS', 'GUILD_MESSAGE_CONTENT');
 
 const client = new Client({ intents, partials: ['CHANNEL', 'MESSAGE', 'USER', 'GUILD_MEMBER', 'REACTION'] });
 
